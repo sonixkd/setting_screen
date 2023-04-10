@@ -13,6 +13,14 @@ class UserProfile extends StatelessWidget {
     MenuRowData(Icons.date_range, 'Данные и память'),
     MenuRowData(Icons.brush, 'Оформление'),
     MenuRowData(Icons.language, 'Язык'),
+    MenuRowData(Icons.sticky_note_2, 'Стикеры'),
+  ];
+  final List<MenuRowData> thridMenuRow = [
+    MenuRowData(Icons.lock_clock, 'Smart Watch'),
+  ];
+  final List<MenuRowData> fourthMenuRow = [
+    MenuRowData(Icons.help, 'Помощь'),
+    MenuRowData(Icons.question_answer, 'Вопросы о компании'),
   ];
 
   UserProfile({super.key});
@@ -26,15 +34,18 @@ class UserProfile extends StatelessWidget {
       ),
       body: Container(
         width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             const _UserInfo(),
             const SizedBox(height: 25),
             _MenuWidget(menuRow: firstMenuRow),
             const SizedBox(height: 25),
             _MenuWidget(menuRow: secondMenuRow),
+            const SizedBox(height: 25),
+            _MenuWidget(menuRow: thridMenuRow),
+            const SizedBox(height: 25),
+            _MenuWidget(menuRow: fourthMenuRow),
           ],
         ),
       ),
@@ -78,8 +89,23 @@ class _MenuWidgetRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+    return TextButton(
+      style: ButtonStyle(
+        //backgroundColor: MaterialStateProperty.all(Colors.white),
+        foregroundColor: MaterialStateProperty.all(Colors.black),
+        //overlayColor: MaterialStateProperty.all(Colors.grey),
+        //elevation: MaterialStateProperty.all(10),
+
+        //padding: MaterialStateProperty.all(EdgeInsets.zero),
+        padding: MaterialStateProperty.all(EdgeInsets.all(15)),
+
+        //minimumSize: MaterialStateProperty.all(Size(0, 0)),
+        // shape: MaterialStateProperty.all(RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(50.0),
+        //   side: BorderSide(color: Colors.black),
+        // )),
+      ),
+      onPressed: () {},
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -98,23 +124,37 @@ class _UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      width: double.infinity,
-      child: Column(
-        children: const [
-          SizedBox(height: 15),
-          _AvatarWidget(),
-          SizedBox(height: 15),
-          _UserNameWidget(),
-          SizedBox(height: 10),
-          _UserPhoneWidget(),
-          SizedBox(height: 10),
-          _UserNickNameWidget(),
-          SizedBox(height: 10),
-        ],
+    return Stack(children: [
+      Container(
+        color: Colors.white,
+        width: double.infinity,
+        child: Column(
+          children: const [
+            SizedBox(height: 15),
+            _AvatarWidget(),
+            SizedBox(height: 15),
+            _UserNameWidget(),
+            SizedBox(height: 10),
+            _UserPhoneWidget(),
+            SizedBox(height: 10),
+            _UserNickNameWidget(),
+            SizedBox(height: 10),
+          ],
+        ),
       ),
-    );
+      Positioned(
+          right: 10,
+          child: TextButton(
+            onPressed: () {},
+            child: Text(
+              "Изменить",
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 17,
+              ),
+            ),
+          ))
+    ]);
   }
 }
 
